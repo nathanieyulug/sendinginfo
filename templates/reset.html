@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Reset Password - Sending</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-purple-500 via-indigo-500 to-pink-500 min-h-screen flex justify-center items-center font-poppins">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="absolute top-4 left-1/2 transform -translate-x-1/2 bg-white text-center rounded-lg shadow-lg px-6 py-3">
+      {% for category, message in messages %}
+        <p class="text-purple-700 font-medium">{{ message }}</p>
+      {% endfor %}
+    </div>
+  {% endif %}
+  {% endwith %}
+
+  <div class="bg-white shadow-xl rounded-2xl p-8 w-96">
+    <h2 class="text-2xl font-bold text-purple-600 text-center mb-6">Reset Password</h2>
+    <form method="POST">
+      <input type="email" name="email" placeholder="Email" class="w-full p-3 border-2 border-purple-400 rounded-lg mb-4 focus:border-purple-600 outline-none">
+      <input type="password" name="password" placeholder="New Password" class="w-full p-3 border-2 border-purple-400 rounded-lg mb-4 focus:border-purple-600 outline-none">
+      <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-3 rounded-lg font-semibold hover:from-indigo-500 hover:to-purple-500 transition">Reset</button>
+    </form>
+    <div class="text-center mt-4 text-gray-600">
+      <a href="{{ url_for('login') }}" class="text-purple-600 font-semibold hover:underline">Back to Login</a>
+    </div>
+  </div>
+</body>
+</html>

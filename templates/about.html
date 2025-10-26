@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About - Sending</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-r from-purple-500 via-indigo-500 to-pink-500 text-white font-poppins min-h-screen flex flex-col">
+
+  <header class="bg-white text-purple-600 text-2xl font-bold p-6 shadow-md text-center">
+    About Sending
+  </header>
+
+  <main class="flex-1 p-8 md:px-40">
+    <div class="bg-white text-gray-800 rounded-2xl p-6 shadow-lg">
+      <h2 class="text-2xl font-semibold mb-4 text-purple-600">Our Mission</h2>
+      <p class="mb-4">
+        <strong>Sending</strong> is a simple, fast, and secure way to share files online.
+        Built by a passionate undergraduate student, it aims to make file transfer easy for everyone — without the need for accounts or logins.
+      </p>
+      <p class="mb-4">
+        Whether you’re sharing a document, photo, or project, <strong>Sending</strong> ensures privacy, security, and convenience.
+      </p>
+      <p>
+        The project is continuously improving and welcomes feedback and contributions.
+      </p>
+    </div>
+  </main>
+
+  <footer class="bg-white text-center text-gray-700 py-4 mt-auto shadow-inner">
+    <a href="{{ url_for('home') }}" class="text-purple-600 font-semibold hover:underline">Back to Home</a>
+  </footer>
+
+</body>
+</html>

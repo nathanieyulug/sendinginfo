@@ -16,6 +16,9 @@ const multiInputWrap = document.getElementById("multi-input-wrap");
 const maxDownloadsInput = document.getElementById("max-downloads");
 const agreeTermsCheckbox = document.getElementById("agree-terms");
 
+// ✅ Added new element for showing messages below download section
+const downloadMessage = document.getElementById("download-message");
+
 let selectedFile = null;
 let multiMode = false; // false = single share (1); true = allow multiple
 
@@ -116,13 +119,44 @@ clearButton.addEventListener("click", () => {
   uploadControls.classList.add("hidden");
   uploadResult.textContent = "";
   dropText.textContent = "Drag & Drop or Click to Upload";
-  // reset multi mode UI (but keep your choice if you prefer)
-  // multiMode = false; multiInputWrap.classList.add("hidden"); multiToggleBtn.textContent = "Share with more people";
 });
 
-// Download by code
-downloadButton.addEventListener("click", () => {
+// ✅ Improved Download by Code (shows message instead of raw JSON)
+downloadButton.addEventListener("click", async () => {
   const code = downloadCodeInput.value.trim();
-  if (!code) return alert("Please enter a valid code!");
-  window.location.href = `/download/${code}`;
+  downloadMessage.textContent = ""; // clear old messages
+
+  if (!code) {
+    downloadMessage.textContent = "⚠️ Please enter a valid code!";
+    downloadMessage.className = "text-yellow-500 text-center mt-2";
+    return;
+  }
+
+  try {
+    const response = await fetch(`/download/${code}`);
+
+    if (response.ok) {
+      const blob = await response.blob();
+      const contentDisposition = response.headers.get("Content-Disposition");
+      const fileName = contentDisposition
+        ? contentDisposition.split("filename=")[1]?.replace(/['"]/g, "")
+        : "downloaded_file";
+
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = fileName;
+      link.click();
+
+      downloadMessage.textContent = "✅ Download started successfully!";
+      downloadMessage.className = "text-green-600 text-center mt-2";
+    } else {
+      const errorData = await response.json();
+      downloadMessage.textContent = `❌ ${errorData.error || "Invalid or expired code!"}`;
+      downloadMessage.className = "text-red-500 text-center mt-2";
+    }
+  } catch (err) {
+    downloadMessage.textContent = "⚠️ Something went wrong! Please try again.";
+    downloadMessage.className = "text-yellow-500 text-center mt-2";
+    console.error(err);
+  }
 });

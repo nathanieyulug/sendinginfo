@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback — SendingInfo.in</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="font-poppins bg-gradient-to-r from-purple-500 via-indigo-500 to-pink-500 min-h-screen flex flex-col">
+  <header class="flex justify-between items-center p-6 bg-white shadow-md">
+   <div class="text-2xl font-bold text-purple-600">📤 SendingInfo.in</div>
+    <nav class="flex gap-6">
+      <a href="/" class="text-purple-600 font-semibold hover:underline">Home</a>
+      <a href="/text" class="text-purple-600 font-semibold hover:underline">Share Text</a>
+    </nav>
+  </header>
+
+  <main class="flex-1 flex justify-center items-center px-6 py-10">
+    <div class="w-full max-w-2xl bg-white rounded-2xl shadow-lg p-6">
+      <h2 class="text-xl font-bold mb-4 text-purple-600">We value your feedback 💬</h2>
+      <p class="text-gray-600 mb-4">Optional and anonymous. Help us improve the service.</p>
+
+      <form id="feedback-form" class="space-y-3">
+        <input type="text" name="name" placeholder="Your name (optional)"
+               class="w-full border-2 border-purple-400 rounded-lg p-3 focus:border-purple-600 outline-none">
+        <textarea name="message" rows="5" placeholder="Your feedback (required)"
+                  class="w-full border-2 border-purple-400 rounded-lg p-3 focus:border-purple-600 outline-none" required></textarea>
+        <button type="submit"
+                class="w-full bg-gradient-to-r from-purple-500 to-indigo-500 text-white p-3 rounded-lg font-semibold hover:from-indigo-500 hover:to-purple-500 transition">
+          Submit
+        </button>
+      </form>
+
+      <p id="feedback-result" class="mt-3 text-sm text-center"></p>
+    </div>
+  </main>
+
+  <footer class="bg-white text-center py-4 shadow-inner mt-auto">
+    <a href="/privacy" class="text-purple-600 font-semibold mx-2 hover:underline">Privacy Policy</a>
+    <a href="/terms" class="text-purple-600 font-semibold mx-2 hover:underline">Terms</a>
+    <a href="/disclaimer" class="text-purple-600 font-semibold mx-2 hover:underline">Disclaimer</a>
+    <a href="/support" class="text-purple-600 font-semibold mx-2 hover:underline">Support Us</a>
+  </footer>
+
+  <script>
+    const form = document.getElementById('feedback-form');
+    const resEl = document.getElementById('feedback-result');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      resEl.textContent = "Sending...";
+      const fd = new FormData(form);
+      const res = await fetch('/feedback', { method: 'POST', body: fd });
+      const data = await res.json();
+      if (data.error) resEl.textContent = "❌ " + data.error;
+      else resEl.textContent = "✅ " + data.message;
+      form.reset();
+    });
+  </script>
+</body>
+</html>

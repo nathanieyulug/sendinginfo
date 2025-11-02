@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Feedback Analytics — SendingInfo.in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-50 font-poppins min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-white shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold text-purple-600">📊 Feedback Dashboard</h1>
+    <a href="/" class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">🏠 Home</a>
+  </header>
+
+  <!-- Content -->
+  <main class="flex-1 p-6">
+    {% if feedbacks %}
+      <div class="overflow-x-auto bg-white rounded-xl shadow-lg p-4">
+        <table class="w-full text-left border-collapse">
+          <thead>
+            <tr class="bg-purple-600 text-white">
+              <th class="p-3 rounded-tl-xl">👤 Name</th>
+              <th class="p-3">💬 Message</th>
+              <th class="p-3 rounded-tr-xl">🕒 Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for fb in feedbacks %}
+              <tr class="border-b hover:bg-purple-50">
+                <td class="p-3 font-semibold text-purple-700">{{ fb['name'] }}</td>
+                <td class="p-3">{{ fb['message'] }}</td>
+                <td class="p-3 text-gray-500">{{ fb['created_at'] }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% else %}
+      <p class="text-center text-gray-600 text-lg mt-10">No feedback yet 😄</p>
+    {% endif %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white text-center py-4 shadow-inner mt-auto">
+    <p class="text-gray-500 text-sm">Proudly made in India 🇮🇳 — SendingInfo.in</p>
+  </footer>
+
+</body>
+</html>

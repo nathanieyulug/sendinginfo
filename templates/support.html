@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Support Us — SendingInfo.in</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body class="font-poppins bg-gradient-to-r from-purple-500 via-indigo-500 to-pink-500 min-h-screen flex flex-col">
+
+  <!-- HEADER -->
+  <header class="flex justify-between items-center p-6 bg-white shadow-md">
+  <div class="text-2xl font-bold text-purple-600">📤 SendingInfo.in</div>
+    <nav class="flex items-center gap-6 text-[17px] font-semibold">
+      <a href="/" class="text-purple-600 hover:underline">Home</a>
+      <a href="/text" class="text-purple-600 hover:underline">Share Text</a>
+    </nav>
+  </header>
+
+  <!-- MAIN -->
+  <main class="flex-1 flex flex-col justify-center items-center text-center px-6 py-10">
+    <div class="bg-white rounded-2xl shadow-lg p-8 max-w-lg w-full">
+      <h2 class="text-2xl font-bold text-purple-600 mb-3">Support Our Hosting 💖</h2>
+      <p class="text-gray-700 mb-6">
+        This platform is completely free for students and creators.  
+        If you found it helpful, consider buying us a coffee or helping maintain server costs.
+      </p>
+
+      <button id="showQRBtn"
+        class="bg-gradient-to-r from-purple-500 to-indigo-500 text-white px-6 py-3 rounded-lg font-semibold hover:from-indigo-500 hover:to-purple-500 transition">
+        Show UPI QR
+      </button>
+
+      <p class="mt-4 text-gray-500 text-sm">Or send directly via UPI ID:  
+        <b class="text-purple-600">sendinginfo@ybl</b>
+      </p>
+    </div>
+  </main>
+
+  <!-- QR POPUP MODAL -->
+  <div id="qrModal"
+       class="hidden fixed inset-0 bg-black/50 backdrop-blur-sm flex justify-center items-center z-50">
+    <div class="bg-white rounded-2xl shadow-xl p-6 text-center w-[90%] max-w-sm">
+      <h3 class="text-lg font-bold text-purple-600 mb-3">Scan to Support 💰</h3>
+      <img src="{{ url_for('static', filename='upi_qr.png') }}"
+           alt="UPI QR Code"
+           class="mx-auto w-60 h-60 rounded-lg shadow-md mb-4 border-2 border-purple-400">
+      <button id="closeQRBtn"
+              class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-semibold transition">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="bg-white text-center py-4 shadow-inner mt-auto">
+    <div class="mb-2">
+      <a href="/feedback" class="text-purple-600 font-semibold mx-2 hover:underline">Feedback 💬</a>
+      <a href="/support" class="text-purple-600 font-semibold mx-2 hover:underline">Support Us ❤️</a>
+      <a href="/privacy" class="text-purple-600 font-semibold mx-2 hover:underline">Privacy Policy</a>
+      <a href="/terms" class="text-purple-600 font-semibold mx-2 hover:underline">Terms & Conditions</a>
+      <a href="/disclaimer" class="text-purple-600 font-semibold mx-2 hover:underline">Disclaimer</a>
+    </div>
+    <div class="text-gray-500 text-sm">Proudly made in India 🇮🇳 — SendingInfo.in</div>
+  </footer>
+
+  <!-- JS for QR Modal -->
+  <script>
+    const showQRBtn = document.getElementById('showQRBtn');
+    const qrModal = document.getElementById('qrModal');
+    const closeQRBtn = document.getElementById('closeQRBtn');
+
+    showQRBtn.addEventListener('click', () => {
+      qrModal.classList.remove('hidden');
+    });
+
+    closeQRBtn.addEventListener('click', () => {
+      qrModal.classList.add('hidden');
+    });
+
+    qrModal.addEventListener('click', (e) => {
+      if (e.target === qrModal) qrModal.classList.add('hidden');
+    });
+  </script>
+
+</body>
+</html>
